@@ -13,6 +13,16 @@ class Preload extends PhaserSceneTool {
       frameHeight: 32,
     });
 
+    this.load.spritesheet("leeMoving", "assets/lee_move.png", {
+      frameWidth: 320,
+      frameHeight: 320,
+    });
+
+    this.load.image("leeIdle", "assets/lee_idle.png");
+
+    this.load.tilemapTiledJSON("map", "assets/maps/icemap.json");
+    this.load.image("iceTiles", "assets/maps/ice_tileset.png");
+
     // this.loadingImagesMockup();
 
     // this.load.audio("jumpSound", "assets/sounds/jump.mp3");
@@ -92,10 +102,12 @@ class Preload extends PhaserSceneTool {
     this.cameras.main.fadeIn(1000, 255, 255, 255);
 
     const logo = this.add.image(
-      this.gameWidth / 2 - 10,
-      this.gameHeight / 2 + 20,
+      this.gameWidth / 2,
+      this.gameHeight / 2,
       "interpretLogoWithCat"
     );
+
+    logo.setScale(0.5);
 
     setTimeout(() => {
       this.scene.start("GameScene");

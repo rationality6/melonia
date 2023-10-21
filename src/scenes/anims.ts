@@ -1,0 +1,21 @@
+export default (anims) => {
+  anims.create({
+    key: "catLaying",
+    frames: anims.generateFrameNumbers("catLaying", {
+      start: 0,
+      end: 3,
+    }),
+    frameRate: 10,
+    repeat: -1,
+  });
+
+  anims.create({
+    key: "leeMoving",
+    frames: anims.generateFrameNumbers("leeMoving", {
+      start: 0,
+      end: 1,
+    }),
+    frameRate: 4,
+    repeat: -1,
+  });
+};
