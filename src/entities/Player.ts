@@ -1,5 +1,5 @@
 class Player extends Phaser.Physics.Matter.Sprite {
-  playerSpeed: number = 2.5;
+  playerSpeed: number = 4;
 
   constructor(scene, x, y, key) {
     super(scene.matter.world, x, y, key);
@@ -42,7 +42,6 @@ class Player extends Phaser.Physics.Matter.Sprite {
   }
 
   update() {
-    // this.anims.play("leeMoving", true);
     let playerVelocity = new Phaser.Math.Vector2();
 
     if (this.scene.inputKeys.left.isDown) {
@@ -63,7 +62,9 @@ class Player extends Phaser.Physics.Matter.Sprite {
     playerVelocity.scale(this.playerSpeed);
     this.setVelocity(playerVelocity.x, playerVelocity.y);
 
-    if (Math.abs(this.velocity.x) > 0 || Math.abs(this.velocity.y) > 0) {
+    if (Math.abs(this.velocity.x) > 0.1 || Math.abs(this.velocity.y) > 0.1) {
+      this.anims.play("leeMoving", true);
+    } else {
       this.anims.play("leeMoving", true);
     }
   }

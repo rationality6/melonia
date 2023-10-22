@@ -14,9 +14,12 @@ class GameScene extends PhaserSceneTool {
   create() {
     const map = this.make.tilemap({ key: "map" });
     const tileset = map.addTilesetImage("IceTileset", "iceTiles", 32, 32, 0, 0);
-    
+
     const layer1 = map.createLayer("fields", tileset, 0, 0);
     const layer2 = map.createLayer("trees", tileset, 0, 0);
+
+    layer1.setCollisionByProperty({ collide: true });
+    this.matter.world.convertTilemapLayer(layer1);
 
     initAnims(this.anims);
 
@@ -45,7 +48,7 @@ class GameScene extends PhaserSceneTool {
       cat1.setExistingBody(compoundBody);
     });
 
-    this.player = new Player(this, 400, 300, "leeIdle");
+    this.player = new Player(this, 350, 300, "leeIdle");
   }
 }
 
