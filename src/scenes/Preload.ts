@@ -25,7 +25,7 @@ class Preload extends PhaserSceneTool {
 
     // this.loadingImagesMockup();
 
-    // this.load.audio("jumpSound", "assets/sounds/jump.mp3");
+    this.load.audio("metgedSound", "assets/sounds/merged_sound.mp3");
   }
 
   loadingImagesMockup() {

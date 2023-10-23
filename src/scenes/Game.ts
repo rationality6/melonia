@@ -68,13 +68,13 @@ class GameScene extends PhaserSceneTool {
           let cat1 = this.matter.add
             .sprite(gameObjectA.x, gameObjectA.y, "catLaying")
             .play("catLaying");
-          cat1.setScale(gameObjectA.scale + 0.5);
+          cat1.setScale(gameObjectA.scale + 1);
           const { Body, Bodies } = Phaser.Physics.Matter.Matter;
-          const playerCollider = Bodies.circle(cat1.x, cat1.y, 25, {
+          const playerCollider = Bodies.circle(cat1.x, cat1.y, 35, {
             isSensor: false,
             label: "catCollider",
           });
-          const playerSensor = Bodies.circle(cat1.x, cat1.y, 35, {
+          const playerSensor = Bodies.circle(cat1.x, cat1.y, 45, {
             isSensor: true,
             label: "catSensor",
           });
@@ -99,13 +99,13 @@ class GameScene extends PhaserSceneTool {
                 let cat1 = this.matter.add
                   .sprite(gameObjectA.x, gameObjectA.y, "catLaying")
                   .play("catLaying");
-                cat1.setScale(gameObjectA.scale + 0.5);
+                cat1.setScale(gameObjectA.scale + 1);
                 const { Body, Bodies } = Phaser.Physics.Matter.Matter;
-                const playerCollider = Bodies.circle(cat1.x, cat1.y, 25, {
+                const playerCollider = Bodies.circle(cat1.x, cat1.y, 45, {
                   isSensor: false,
                   label: "catCollider",
                 });
-                const playerSensor = Bodies.circle(cat1.x, cat1.y, 35, {
+                const playerSensor = Bodies.circle(cat1.x, cat1.y, 55, {
                   isSensor: true,
                   label: "catSensor",
                 });
@@ -117,7 +117,7 @@ class GameScene extends PhaserSceneTool {
                 cat1.setExistingBody(compoundBody);
                 this.cats.push(cat1);
       
-      
+                this.sound.play("metgedSound");
                 this.removeObjectFromCatGroupArray(gameObjectA);
                 this.removeObjectFromCatGroupArray(gameObjectB);
       
@@ -127,6 +127,7 @@ class GameScene extends PhaserSceneTool {
           });
 
 
+          this.sound.play("metgedSound");
           this.removeObjectFromCatGroupArray(gameObjectA);
           this.removeObjectFromCatGroupArray(gameObjectB);
 
