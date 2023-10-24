@@ -10,12 +10,12 @@ export default (anims) => {
   });
 
   anims.create({
-    key: "leeMoving",
-    frames: anims.generateFrameNumbers("leeMoving", {
+    key: "slimeGreenIdle",
+    frames: anims.generateFrameNumbers("slimeGreen", {
       start: 0,
-      end: 1,
+      end: 9,
     }),
-    frameRate: 4,
+    frameRate: 10,
     repeat: -1,
   });
 };

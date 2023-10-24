@@ -18,6 +18,15 @@ class Preload extends PhaserSceneTool {
       frameHeight: 320,
     });
 
+    this.load.spritesheet("slimeGreen", "assets/slime_green.png", {
+      frameWidth: 50,
+      frameHeight: 50,
+    });
+
+    this.load.image("aris", "assets/aris.png");
+
+    this.load.image("emptyJar", "assets/empty_jar.png");
+
     this.load.image("leeIdle", "assets/lee_idle.png");
 
     this.load.tilemapTiledJSON("map", "assets/maps/icemap.json");
