@@ -39,7 +39,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   setdoubleClickInputs() {
     this.scene.input.on("pointerdown", (pointer) => {
 
-      new Slime(this.scene, this.x, 100, "slimeGreen").spawn();
+      this.scene.slimes.spawnSlime(pointer.x);
 
       if (this.firstClickTime == 0) {
         this.firstClickTime = this.getTime();

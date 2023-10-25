@@ -5,8 +5,11 @@ import initAnims from "./anims";
 
 import Aris from "../entities/Aris";
 
+import Slimes from "../entities/Slimes"
+
 class GameScene extends PhaserSceneTool {
   player: Player;
+  slimes: any;
 
   constructor() {
     super("GameScene");
@@ -15,6 +18,8 @@ class GameScene extends PhaserSceneTool {
   create() {
     initAnims(this.anims);
     this.setJarAndWallCollision()
+
+    this.slimes = new Slimes(this, 0, 0, "slimes");
 
     this.player = new Player(this, 350, 70, "aris");
 
@@ -61,16 +66,6 @@ class GameScene extends PhaserSceneTool {
     });
   }
 
-  removeObjectFromCatGroupArray(targetObject) {
-    let foundCat = this.cats.findIndex(
-      (cat) => cat.body.id == targetObject.body.id
-    );
-    this.cats.splice(foundCat, 1);
-
-    this.matter.world.remove(targetObject);
-
-    targetObject.destroy();
-  }
 }
 
 export default GameScene;
