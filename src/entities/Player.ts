@@ -1,8 +1,12 @@
-import Slime from "./Slime"
+import Slime from "./Slime";
 
 class Player extends Phaser.Physics.Arcade.Sprite {
   playerSpeed: number = 4;
   firstClickTime: number = 0;
+
+  middleOfDrop: boolean = false
+
+  dropDelayLength = 550
 
   constructor(scene, x, y, key) {
     super(scene, x, y, key);
@@ -13,19 +17,19 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     this.setScale(0.2);
     this.setDepth(1);
-   
+
     this.setInputs();
   }
 
   setInputs() {
     this.setMoveInputs();
-    this.setdoubleClickInputs();
+    this.setClickInputs();
   }
 
   setMoveInputs() {
     this.scene.input.on("pointermove", (pointer) => {
-      if(pointer.worldX > 410 || pointer.worldX < 90){
-        return  
+      if (pointer.worldX > 410 || pointer.worldX < 90) {
+        return;
       }
       this.x = pointer.worldX;
     });
@@ -36,10 +40,20 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     return d.getTime();
   }
 
-  setdoubleClickInputs() {
+  setClickInputs() {
     this.scene.input.on("pointerdown", (pointer) => {
+      if (this.middleOfDrop) {
+        return;
+      }
 
-      this.scene.slimes.spawnSlime(pointer.x);
+      this.scene.slimes.spawnSlime(this.x);
+      this.scene.slimes.updateSlimeDisplay(this.scene.slimes.nextSlimeColor);
+
+      this.middleOfDrop = true
+
+      setTimeout(() => {
+        this.middleOfDrop = false
+      }, this.dropDelayLength);
 
       if (this.firstClickTime == 0) {
         this.firstClickTime = this.getTime();

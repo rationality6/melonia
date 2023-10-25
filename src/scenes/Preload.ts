@@ -13,10 +13,26 @@ class Preload extends PhaserSceneTool {
       frameHeight: 32,
     });
 
-    this.load.spritesheet("slimeGreen", "assets/slime_green.png", {
+    this.load.spritesheet("slimeGreen", "assets/slimes/slime_green_final.png", {
       frameWidth: 50,
       frameHeight: 50,
     });
+    this.load.spritesheet("slimeRed", "assets/slimes/slime_red_final.png", {
+      frameWidth: 50,
+      frameHeight: 50,
+    });
+    this.load.spritesheet("slimeBlue", "assets/slimes/slime_blue_final.png", {
+      frameWidth: 50,
+      frameHeight: 50,
+    });
+    this.load.spritesheet(
+      "slimeYellow",
+      "assets/slimes/slime_yellow_final.png",
+      {
+        frameWidth: 50,
+        frameHeight: 50,
+      }
+    );
 
     this.load.image("aris", "assets/aris.png");
 
@@ -28,6 +44,8 @@ class Preload extends PhaserSceneTool {
     // this.loadingImagesMockup();
 
     this.load.audio("metgedSound", "assets/sounds/merged_sound.mp3");
+    this.load.audio("toFather", "assets/sounds/to_father.mp3");
+    this.load.audio("super", "assets/sounds/super.mp3");
   }
 
   loadingImagesMockup() {
@@ -120,10 +138,6 @@ class Preload extends PhaserSceneTool {
     this.cameras.main.fadeOut(logoExposeSetting, 255, 255, 255);
     await this.setDelay(logoExposeSetting);
     this.scene.start("GameScene");
-
-    setTimeout(() => {
-      this.scene.start("GameScene");
-    }, logoExposeSetting);
   }
 }
 

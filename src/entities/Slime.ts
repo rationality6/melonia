@@ -1,9 +1,12 @@
 class Slime extends Phaser.Physics.Matter.Sprite {
-  slimeColors = ["red", "green", "yellow", "blue"];
+  static slimeColors = ["Red", "Green", "Yellow", "Blue"];
+  name: string;
 
   constructor(scene, x, y, key, size = 0) {
     super(scene.matter.world, x, y, key);
+
     this.setScale(3);
+    this.name = key
     this.scene.events.on(Phaser.Scenes.Events.UPDATE, this.update, this);
 
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
@@ -27,19 +30,18 @@ class Slime extends Phaser.Physics.Matter.Sprite {
 
     this.setDepth(1);
     // this.setTint(0xff0000)
-    this.play("slimeGreenIdle", true);
+    this.play(`${key}Idle`, true);
   }
 
-  get randomSlimeColor() {
+  static get randomSlimeColor() {
     return this.slimeColors[
       Math.floor(Math.random() * this.slimeColors.length)
     ];
   }
 
-  obsticleSlime(){
-    this.setTint(0xff0000)
+  obsticleSlime() {
+    this.setTint(0xff0000);
   }
-
 }
 
 export default Slime;

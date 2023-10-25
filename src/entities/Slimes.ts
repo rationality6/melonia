@@ -1,18 +1,38 @@
 import Slime from "./Slime";
 
 class Slimes {
+  nextSlimeColor: string;
+  nextSlimeDisplayed: Phaser.GameObjects.Sprite;
+
   slimes: any = [];
   scene: Phaser.Scene;
 
   constructor(scene: Phaser.Scene) {
     this.scene = scene;
+
+    this.nextSlimeColor = Slime.randomSlimeColor;
+
+    this.nextSlimeDisplayed = this.scene.add
+      .sprite(50, 100, this.nextSlimeColor)
+      .play(`slime${this.nextSlimeColor}Idle`)
+      .setScale(2);
+  }
+
+  updateSlimeDisplay(nextSlimeColor: string) {
+    this.nextSlimeDisplayed.destroy();
+    this.nextSlimeDisplayed = this.scene.add
+      .sprite(50, 100, nextSlimeColor)
+      .play(`slime${nextSlimeColor}Idle`)
+      .setScale(2);
   }
 
   spawnSlime(x) {
-    let slime = new Slime(this.scene, x, 100, "slime");
+    let slime = new Slime(this.scene, x, 100, `slime${this.nextSlimeColor}`);
+    this.nextSlimeColor = Slime.randomSlimeColor;
+
     this.slimes.push(slime);
 
-    this.setSlimesCollides(slime, 3);
+    this.setSlimesCollides(slime, 2);
   }
 
   setSlimesCollides(slime, count) {
@@ -24,34 +44,52 @@ class Slimes {
       objectB: this.slimes,
       callback: (eventData) => {
         const { bodyA, bodyB, gameObjectA, gameObjectB, pair } = eventData;
-
-        if (gameObjectA.scale === gameObjectB.scale) {
+        if (
+          gameObjectA.scale === gameObjectB.scale &&
+          gameObjectA.name === gameObjectB.name
+        ) {
           this.scene.sound.play("metgedSound");
 
-          if (gameObjectA.scale < 5) {
+          if (gameObjectA.scale < 4) {
             let biggerSlime = new Slime(
               this.scene,
               gameObjectA.x,
               gameObjectA.y,
-              "slime",
+              gameObjectA.name,
               5
             );
             biggerSlime.setScale(gameObjectA.scale + 1);
             this.slimes.push(biggerSlime);
             this.setSlimesCollides(biggerSlime, count - 1);
           } else {
-            console.log("gone");
-            new Slime(this.scene, gameObjectA.x, gameObjectA.y, "slime").obsticleSlime()
-            new Slime(this.scene, 600, 100, "slime").obsticleSlime()
+            const randomX = Phaser.Math.Between(1, 2);
+            if (randomX === 1) {
+              this.scene.sound.play("toFather");
+            } else {
+              this.scene.sound.play("super");
+            }
+
+            this.spawnObsticleSlime(gameObjectA.name);
           }
 
           this.removeObjectFromCatGroupArray(gameObjectA);
           this.removeObjectFromCatGroupArray(gameObjectB);
-
         }
       },
       context: this,
     });
+  }
+
+  spawnObsticleSlime(slimeName) {
+    const randomX = Phaser.Math.Between(600, 900);
+    const randomY = Phaser.Math.Between(10, 20);
+    new Slime(this.scene, randomX, 80 + randomY, slimeName).obsticleSlime();
+    const randomX2 = Phaser.Math.Between(600, 900);
+    const randomY2 = Phaser.Math.Between(10, 20);
+    new Slime(this.scene, randomX2, 80 + randomY2, slimeName).obsticleSlime();
+    const randomX3 = Phaser.Math.Between(600, 900);
+    const randomY3 = Phaser.Math.Between(10, 20);
+    new Slime(this.scene, randomX3, 80 + randomY3, slimeName).obsticleSlime();
   }
 
   removeObjectFromCatGroupArray(targetObject) {

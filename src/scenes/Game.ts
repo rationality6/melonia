@@ -5,7 +5,7 @@ import initAnims from "./anims";
 
 import Aris from "../entities/Aris";
 
-import Slimes from "../entities/Slimes"
+import Slimes from "../entities/Slimes";
 
 class GameScene extends PhaserSceneTool {
   player: Player;
@@ -17,7 +17,7 @@ class GameScene extends PhaserSceneTool {
 
   create() {
     initAnims(this.anims);
-    this.setJarAndWallCollision()
+    this.setLayouts();
 
     this.slimes = new Slimes(this, 0, 0, "slimes");
 
@@ -27,6 +27,7 @@ class GameScene extends PhaserSceneTool {
       .setScale(0.3)
       .setOrigin(1, 0)
       .setDepth(2);
+
     this.playerCharacter2 = new Aris(this, 512, 540, "aris")
       .setScale(0.3)
       .setOrigin(0, 0)
@@ -34,7 +35,7 @@ class GameScene extends PhaserSceneTool {
       .setFlipX(true);
   }
 
-  setJarAndWallCollision() {
+  setLayouts() {
     this.matter.world.setBounds(0, 0, this.gameWidth, this.gameHeight);
 
     let jarPlayer = this.add.image(250, 330, "emptyJar").setScale(1.5);
@@ -65,7 +66,6 @@ class GameScene extends PhaserSceneTool {
       isStatic: true,
     });
   }
-
 }
 
 export default GameScene;

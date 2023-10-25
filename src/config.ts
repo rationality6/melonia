@@ -2,8 +2,8 @@ import Phaser from "phaser";
 import PhaserMatterCollisionPlugin from "phaser-matter-collision-plugin";
 
 const SHARED_CONFIG = {
-  arcadeDebug: true,
-  matterDebug: true,
+  arcadeDebug: false,
+  matterDebug: false,
 };
 
 export default {
@@ -24,7 +24,7 @@ export default {
     },
     matter: {
       debug: SHARED_CONFIG.matterDebug,
-      gravity: { y: 0.5 },
+      gravity: { y: 0.6 },
     },
   },
   plugins: {
