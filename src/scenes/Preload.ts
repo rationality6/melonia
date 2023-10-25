@@ -98,18 +98,28 @@ class Preload extends PhaserSceneTool {
     });
   }
 
-  create() {
+  async create() {
     const logoExposeSetting: Number = this.isLocal ? 300 : 2000;
 
     this.cameras.main.fadeIn(1000, 255, 255, 255);
 
-    const logo = this.add.image(
+    const logo = this.add
+      .image(this.gameWidth / 2, this.gameHeight / 2, "kbb")
+      .setScale(0.3);
+    await this.setDelay(logoExposeSetting);
+    this.cameras.main.fadeOut(logoExposeSetting, 255, 255, 255);
+    await this.setDelay(logoExposeSetting);
+    logo.destroy();
+    this.cameras.main.fadeIn(logoExposeSetting, 255, 255, 255);
+    const logo2 = this.add.image(
       this.gameWidth / 2,
       this.gameHeight / 2,
       "interpretLogoWithCat"
     );
-
-    logo.setScale(0.5);
+    await this.setDelay(logoExposeSetting);
+    this.cameras.main.fadeOut(logoExposeSetting, 255, 255, 255);
+    await this.setDelay(logoExposeSetting);
+    this.scene.start("GameScene");
 
     setTimeout(() => {
       this.scene.start("GameScene");
