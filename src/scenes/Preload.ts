@@ -13,11 +13,6 @@ class Preload extends PhaserSceneTool {
       frameHeight: 32,
     });
 
-    this.load.spritesheet("leeMoving", "assets/lee_move.png", {
-      frameWidth: 320,
-      frameHeight: 320,
-    });
-
     this.load.spritesheet("slimeGreen", "assets/slime_green.png", {
       frameWidth: 50,
       frameHeight: 50,
@@ -26,8 +21,6 @@ class Preload extends PhaserSceneTool {
     this.load.image("aris", "assets/aris.png");
 
     this.load.image("emptyJar", "assets/empty_jar.png");
-
-    this.load.image("leeIdle", "assets/lee_idle.png");
 
     this.load.tilemapTiledJSON("map", "assets/maps/icemap.json");
     this.load.image("iceTiles", "assets/maps/ice_tileset.png");
