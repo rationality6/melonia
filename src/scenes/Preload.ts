@@ -34,12 +34,15 @@ class Preload extends PhaserSceneTool {
       }
     );
 
-    this.load.image('red', 'assets/particles/red.png');
-    this.load.image('green', 'assets/particles/green.png');
-    this.load.image('blue', 'assets/particles/blue.png');
+    this.load.image("red", "assets/particles/red.png");
+    this.load.image("green", "assets/particles/green.png");
+    this.load.image("blue", "assets/particles/blue.png");
 
     this.load.image("aris", "assets/aris.png");
     this.load.image("momoi", "assets/momoi.png");
+
+    this.load.image("lineYellow", "assets/line_yellow.png");
+    this.load.image("lineGreen", "assets/line_green.png");
 
     this.load.image("emptyJar", "assets/empty_jar.png");
 
@@ -52,6 +55,7 @@ class Preload extends PhaserSceneTool {
     this.load.audio("toFather", "assets/sounds/to_father.mp3");
     this.load.audio("super", "assets/sounds/super.mp3");
     this.load.audio("ready", "assets/sounds/ready_voice.mp3");
+    this.load.audio("happySong", "assets/sounds/happy_theme.mp3");
   }
 
   loadingImagesMockup() {

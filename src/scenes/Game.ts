@@ -10,12 +10,18 @@ import Slimes from "../entities/Slimes";
 class GameScene extends PhaserSceneTool {
   player: Player;
   player2;
-  slimes: any;
+  playerSlimes: any;
+  opponentSlimes: any;
 
   playerCharacter;
   playerCharacter2;
 
   endPair;
+
+  blackA;
+  blackB;
+
+  gameEnded: boolean = false;
 
   constructor() {
     super("GameScene");
@@ -30,7 +36,8 @@ class GameScene extends PhaserSceneTool {
     this.add.text(460, 100, "0", { color: "#fff", fontSize: 50 });
     this.add.text(530, 100, "0", { color: "#fff", fontSize: 50 });
 
-    this.slimes = new Slimes(this, 0, 0, "slimes");
+    this.playerSlimes = new Slimes(this);
+    this.opponentSlimes = new Slimes(this, "opponent");
 
     this.player = new Player(this, 350, 70, "aris");
     this.player2 = this.add.image(850, 70, "momoi").setScale(0.18);
@@ -66,28 +73,40 @@ class GameScene extends PhaserSceneTool {
     });
     this.catmull.setDepth(3);
 
-    this.blockB = this.matter.add.image(250, 270, "block", null, {
-      isSensor: true,
-      label: "blockB",
+    this.catmullReverse = this.add.particles(800, 500, "red", {
+      x: { values: [0, -500], interpolation: "catmull" },
+      lifespan: 2000,
+      gravityY: -120,
+      speed: 136,
+      scale: 0.65,
+      emitting: false,
+      blendMode: "ADD",
     });
-    this.blockB.setStatic(true);
-    this.blockB = this.matter.add.image(150, 270, "block", null, {
-      isSensor: true,
-      label: "blockB",
-    });
-    this.blockB.setStatic(true);
+    this.catmullReverse.setDepth(3);
 
-    this.blockB = this.matter.add.image(350, 270, "block", null, {
-      isSensor: true,
-      label: "blockB",
-    });
+    this.blockA = this.matter.add
+      .image(775, 270, "lineGreen", null, {
+        isSensor: true,
+        label: "blockA",
+      })
+      .setScale(0.5);
+    this.blockA.setStatic(true);
+
+    this.blockB = this.matter.add
+      .image(250, 270, "lineYellow", null, {
+        isSensor: true,
+        label: "blockB",
+      })
+      .setScale(0.5);
     this.blockB.setStatic(true);
 
     this.matter.world.on("collisionactive", (event, o1, o2) => {
       if (
         event.pairs.some(
           (pair) =>
-            pair.bodyA.label == "blockB" && pair.bodyB.label == "slimeSensor"
+            (pair.bodyA.label == "blockB" &&
+              pair.bodyB.label == "slimeSensor") ||
+            (pair.bodyA.label == "blockA" && pair.bodyB.label == "slimeSensor")
         )
       ) {
         if (this.afterCollideTime == undefined) {
@@ -98,43 +117,31 @@ class GameScene extends PhaserSceneTool {
           this.afterCollideTime &&
           this.afterCollideTime < this.getTimestamp()
         ) {
-          console.log("game ended");
+          if (this.gameEnded) {
+            return;
+          }
+          this.gameEnded = true;
+          clearInterval(this.opponentInterbal);
           this.scene.pause();
+
+          this.sound.play("happySong");
+          setTimeout(() => {
+            this.afterCollideTime = undefined;
+            this.gameEnded = false;
+            this.scene.restart();
+            this.game.sound.stopAll();
+          }, 4000);
         }
       } else {
         this.afterCollideTime = undefined;
       }
     });
 
-    this.rayGraphics = this.add.graphics({
-      lineStyle: {
-        width: 3,
-        color: 0xff0000,
-      },
-    });
-
-    const line = new Phaser.Geom.Line();
-    line.x1 = 70;
-    line.y1 = 270;
-    line.x2 = 450;
-    line.y2 = 270;
-
-    this.rayGraphics.strokeLineShape(line);
-
-    this.rayGraphics2 = this.add.graphics({
-      lineStyle: {
-        width: 2,
-        color: 0xff0000,
-      },
-    });
-
-    const line2 = new Phaser.Geom.Line();
-    line.x1 = 570;
-    line.y1 = 270;
-    line.x2 = 950;
-    line.y2 = 270;
-
-    this.rayGraphics.strokeLineShape(line);
+    this.opponentInterbal = setInterval(() => {
+      const randomLocation = Phaser.Math.Between(650, 950);
+      this.opponentSlimes.spawnSlime(randomLocation);
+      this.opponentSlimes.updateNextSlimeDisplay();
+    }, 600);
   }
 
   setLayouts() {
@@ -167,10 +174,6 @@ class GameScene extends PhaserSceneTool {
       chamfer: { radius: 20 },
       isStatic: true,
     });
-  }
-
-  update() {
-    // console.log(this.endPair)
   }
 }
 

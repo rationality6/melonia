@@ -7,23 +7,42 @@ class Slimes {
   slimes: any = [];
   scene: Phaser.Scene;
 
-  constructor(scene: Phaser.Scene) {
+  playerType;
+
+  constructor(scene: Phaser.Scene, playerType = "player") {
     this.scene = scene;
 
     this.nextSlimeColor = Slime.randomSlimeColor;
 
-    this.nextSlimeDisplayed = this.scene.add
-      .sprite(50, 100, this.nextSlimeColor)
-      .play(`slime${this.nextSlimeColor}Idle`)
-      .setScale(2);
+    this.playerType = playerType;
+
+    if (this.playerType === "player") {
+      this.nextSlimeDisplayed = this.scene.add
+        .sprite(50, 100, this.nextSlimeColor)
+        .play(`slime${this.nextSlimeColor}Idle`)
+        .setScale(2);
+    } else {
+      this.nextSlimeDisplayed = this.scene.add
+        .sprite(970, 100, this.nextSlimeColor)
+        .play(`slime${this.nextSlimeColor}Idle`)
+        .setScale(2);
+    }
   }
 
-  updateSlimeDisplay(nextSlimeColor: string) {
-    this.nextSlimeDisplayed.destroy();
-    this.nextSlimeDisplayed = this.scene.add
-      .sprite(50, 100, nextSlimeColor)
-      .play(`slime${nextSlimeColor}Idle`)
-      .setScale(2);
+  updateNextSlimeDisplay() {
+    if (this.playerType === "player") {
+      this.nextSlimeDisplayed.destroy();
+      this.nextSlimeDisplayed = this.scene.add
+        .sprite(50, 100, this.nextSlimeColor)
+        .play(`slime${this.nextSlimeColor}Idle`)
+        .setScale(2);
+    } else {
+      this.nextSlimeDisplayed.destroy();
+      this.nextSlimeDisplayed = this.scene.add
+        .sprite(970, 100, this.nextSlimeColor)
+        .play(`slime${this.nextSlimeColor}Idle`)
+        .setScale(2);
+    }
   }
 
   spawnSlime(x) {
@@ -76,26 +95,49 @@ class Slimes {
   }
 
   spawnObsticleSlime(slimeName) {
-    this.scene.player.middleOfDrop = true;
-    this.scene.catmull.emitting = true;
+    if (this.playerType === "player") {
+      this.scene.player.middleOfDrop = true;
+      this.scene.catmull.emitting = true;
 
-    const randomX = Phaser.Math.Between(600, 900);
-    const randomY = Phaser.Math.Between(10, 20);
-    new Slime(this.scene, randomX, 80 + randomY, slimeName).obsticleSlime();
-    const randomX2 = Phaser.Math.Between(600, 900);
-    const randomY2 = Phaser.Math.Between(10, 20);
-    new Slime(this.scene, randomX2, 80 + randomY2, slimeName).obsticleSlime();
-    const randomX3 = Phaser.Math.Between(600, 900);
-    const randomY3 = Phaser.Math.Between(10, 20);
-    new Slime(this.scene, randomX3, 80 + randomY3, slimeName).obsticleSlime();
-    const randomX4 = Phaser.Math.Between(600, 900);
-    const randomY4 = Phaser.Math.Between(10, 20);
-    new Slime(this.scene, randomX4, 80 + randomY4, slimeName).obsticleSlime();
+      const randomX = Phaser.Math.Between(600, 900);
+      const randomY = Phaser.Math.Between(10, 20);
+      new Slime(this.scene, randomX, 80 + randomY, slimeName).obsticleSlime();
+      const randomX2 = Phaser.Math.Between(600, 900);
+      const randomY2 = Phaser.Math.Between(10, 20);
+      new Slime(this.scene, randomX2, 80 + randomY2, slimeName).obsticleSlime();
+      const randomX3 = Phaser.Math.Between(600, 900);
+      const randomY3 = Phaser.Math.Between(10, 20);
+      new Slime(this.scene, randomX3, 80 + randomY3, slimeName).obsticleSlime();
+      const randomX4 = Phaser.Math.Between(600, 900);
+      const randomY4 = Phaser.Math.Between(10, 20);
+      new Slime(this.scene, randomX4, 80 + randomY4, slimeName).obsticleSlime();
 
-    setTimeout(() => {
-      this.scene.player.middleOfDrop = false;
-      this.scene.catmull.emitting = false;
-    }, 300);
+      setTimeout(() => {
+        this.scene.player.middleOfDrop = false;
+        this.scene.catmull.emitting = false;
+      }, 300);
+    } else {
+      // this.scene.player2.middleOfDrop = true;
+      this.scene.catmullReverse.emitting = true;
+
+      const randomX = Phaser.Math.Between(100, 400);
+      const randomY = Phaser.Math.Between(10, 20);
+      new Slime(this.scene, randomX, 80 + randomY, slimeName).obsticleSlime();
+      const randomX2 = Phaser.Math.Between(100, 400);
+      const randomY2 = Phaser.Math.Between(10, 20);
+      new Slime(this.scene, randomX2, 80 + randomY2, slimeName).obsticleSlime();
+      const randomX3 = Phaser.Math.Between(100, 400);
+      const randomY3 = Phaser.Math.Between(10, 20);
+      new Slime(this.scene, randomX3, 80 + randomY3, slimeName).obsticleSlime();
+      const randomX4 = Phaser.Math.Between(100, 400);
+      const randomY4 = Phaser.Math.Between(10, 20);
+      new Slime(this.scene, randomX4, 80 + randomY4, slimeName).obsticleSlime();
+
+      setTimeout(() => {
+        // this.scene.player.middleOfDrop = false;
+        this.scene.catmullReverse.emitting = false;
+      }, 300);
+    }
   }
 
   removeObjectFromCatGroupArray(targetObject) {

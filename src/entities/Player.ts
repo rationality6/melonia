@@ -44,8 +44,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         return;
       }
 
-      this.scene.slimes.spawnSlime(this.x);
-      this.scene.slimes.updateSlimeDisplay(this.scene.slimes.nextSlimeColor);
+      this.scene.playerSlimes.spawnSlime(this.x);
+      this.scene.playerSlimes.updateNextSlimeDisplay();
 
       this.middleOfDrop = true;
 
