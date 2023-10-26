@@ -33,8 +33,14 @@ class GameScene extends PhaserSceneTool {
 
     this.sound.play("ready");
 
-    // this.add.text(460, 100, "0", { color: "#fff", fontSize: 50 });
-    // this.add.text(530, 100, "0", { color: "#fff", fontSize: 50 });
+    // this.playerWinCountText = this.add.text(460, 100, "0", {
+    //   color: "#fff",
+    //   fontSize: 50,
+    // });
+    // this.opponentWinCountText = this.add.text(530, 100, "0", {
+    //   color: "#fff",
+    //   fontSize: 50,
+    // });
 
     this.playerSlimes = new Slimes(this);
     this.opponentSlimes = new Slimes(this, "opponent");
@@ -85,19 +91,19 @@ class GameScene extends PhaserSceneTool {
     this.catmullReverse.setDepth(3);
 
     this.blockA = this.matter.add
-      .image(775, 270, "lineGreen", null, {
+      .image(775, 210, "lineGreen", null, {
         isSensor: true,
         label: "blockA",
       })
-      .setScale(0.5);
+      .setScale(0.6);
     this.blockA.setStatic(true);
 
     this.blockB = this.matter.add
-      .image(250, 270, "lineYellow", null, {
+      .image(250, 210, "lineYellow", null, {
         isSensor: true,
         label: "blockB",
       })
-      .setScale(0.5);
+      .setScale(0.6);
     this.blockB.setStatic(true);
 
     this.matter.world.on("collisionactive", (event, o1, o2) => {
@@ -128,6 +134,7 @@ class GameScene extends PhaserSceneTool {
           setTimeout(() => {
             this.afterCollideTime = undefined;
             this.gameEnded = false;
+
             this.scene.restart();
             this.game.sound.stopAll();
           }, 4000);

@@ -102,9 +102,11 @@ class Slimes {
       const randomX = Phaser.Math.Between(600, 900);
       const randomY = Phaser.Math.Between(10, 20);
       new Slime(this.scene, randomX, 80 + randomY, slimeName).obsticleSlime();
+      // new Slime(this.scene, randomX, 80 + randomY, slimeName).obsticleSlime();
       const randomX2 = Phaser.Math.Between(600, 900);
       const randomY2 = Phaser.Math.Between(10, 20);
       new Slime(this.scene, randomX2, 80 + randomY2, slimeName).obsticleSlime();
+      // new Slime(this.scene, randomX2, 80 + randomY2, slimeName).obsticleSlime();
       const randomX3 = Phaser.Math.Between(600, 900);
       const randomY3 = Phaser.Math.Between(10, 20);
       new Slime(this.scene, randomX3, 80 + randomY3, slimeName).obsticleSlime();
@@ -126,17 +128,22 @@ class Slimes {
       const randomX = Phaser.Math.Between(100, 400);
       const randomY = Phaser.Math.Between(10, 20);
       new Slime(this.scene, randomX, 80 + randomY, slimeName).obsticleSlime();
+      new Slime(this.scene, randomX, 80 + randomY, slimeName).obsticleSlime();
       const randomX2 = Phaser.Math.Between(100, 400);
       const randomY2 = Phaser.Math.Between(10, 20);
+      new Slime(this.scene, randomX2, 80 + randomY2, slimeName).obsticleSlime();
       new Slime(this.scene, randomX2, 80 + randomY2, slimeName).obsticleSlime();
       const randomX3 = Phaser.Math.Between(100, 400);
       const randomY3 = Phaser.Math.Between(10, 20);
       new Slime(this.scene, randomX3, 80 + randomY3, slimeName).obsticleSlime();
+      new Slime(this.scene, randomX3, 80 + randomY3, slimeName).obsticleSlime();
       const randomX4 = Phaser.Math.Between(100, 400);
       const randomY4 = Phaser.Math.Between(10, 20);
       new Slime(this.scene, randomX4, 80 + randomY4, slimeName).obsticleSlime();
+      new Slime(this.scene, randomX4, 80 + randomY4, slimeName).obsticleSlime();
       const randomX5 = Phaser.Math.Between(100, 400);
       const randomY5 = Phaser.Math.Between(10, 20);
+      new Slime(this.scene, randomX5, 80 + randomY5, slimeName).obsticleSlime();
       new Slime(this.scene, randomX5, 80 + randomY5, slimeName).obsticleSlime();
 
       setTimeout(() => {
