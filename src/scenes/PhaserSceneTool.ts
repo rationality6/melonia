@@ -25,6 +25,11 @@ class PhaserSceneTool extends Phaser.Scene {
       }, time)
     );
   }
+
+  getTimestamp() {
+    let newdate = new Date();
+    return newdate.getTime();
+  };
 }
 
 export default PhaserSceneTool;

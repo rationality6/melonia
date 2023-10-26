@@ -12,12 +12,12 @@ class Slime extends Phaser.Physics.Matter.Sprite {
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
     const playerCollider = Bodies.circle(this.x, this.y, 35 + size, {
       isSensor: false,
-      label: "playerCollider",
+      label: "slimeCollider",
       friction: 10,
     });
-    const playerSensor = Bodies.circle(this.x, this.y, 45 + size, {
+    const playerSensor = Bodies.circle(this.x, this.y, 40 + size, {
       isSensor: true,
-      label: "playerSensor",
+      label: "slimeSensor",
     });
 
     const compoundBody = Body.create({
@@ -31,6 +31,7 @@ class Slime extends Phaser.Physics.Matter.Sprite {
     this.setDepth(1);
     // this.setTint(0xff0000)
     this.play(`${key}Idle`, true);
+    this.setCollisionGroup(1)
   }
 
   static get randomSlimeColor() {
@@ -42,6 +43,7 @@ class Slime extends Phaser.Physics.Matter.Sprite {
   obsticleSlime() {
     this.setTint(0xff0000);
   }
+  
 }
 
 export default Slime;

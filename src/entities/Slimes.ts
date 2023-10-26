@@ -62,12 +62,7 @@ class Slimes {
             this.slimes.push(biggerSlime);
             this.setSlimesCollides(biggerSlime, count - 1);
           } else {
-            const randomX = Phaser.Math.Between(1, 2);
-            if (randomX === 1) {
-              this.scene.sound.play("toFather");
-            } else {
-              this.scene.sound.play("super");
-            }
+            this.scene.player.randomVoice();
 
             this.spawnObsticleSlime(gameObjectA.name);
           }
@@ -81,6 +76,9 @@ class Slimes {
   }
 
   spawnObsticleSlime(slimeName) {
+    this.scene.player.middleOfDrop = true;
+    this.scene.catmull.emitting = true;
+
     const randomX = Phaser.Math.Between(600, 900);
     const randomY = Phaser.Math.Between(10, 20);
     new Slime(this.scene, randomX, 80 + randomY, slimeName).obsticleSlime();
@@ -90,6 +88,14 @@ class Slimes {
     const randomX3 = Phaser.Math.Between(600, 900);
     const randomY3 = Phaser.Math.Between(10, 20);
     new Slime(this.scene, randomX3, 80 + randomY3, slimeName).obsticleSlime();
+    const randomX4 = Phaser.Math.Between(600, 900);
+    const randomY4 = Phaser.Math.Between(10, 20);
+    new Slime(this.scene, randomX4, 80 + randomY4, slimeName).obsticleSlime();
+
+    setTimeout(() => {
+      this.scene.player.middleOfDrop = false;
+      this.scene.catmull.emitting = false;
+    }, 300);
   }
 
   removeObjectFromCatGroupArray(targetObject) {

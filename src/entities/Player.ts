@@ -1,12 +1,10 @@
-import Slime from "./Slime";
-
 class Player extends Phaser.Physics.Arcade.Sprite {
   playerSpeed: number = 4;
   firstClickTime: number = 0;
 
-  middleOfDrop: boolean = false
+  middleOfDrop: boolean = false;
 
-  dropDelayLength = 550
+  dropDelayLength = 600;
 
   constructor(scene, x, y, key) {
     super(scene, x, y, key);
@@ -49,10 +47,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       this.scene.slimes.spawnSlime(this.x);
       this.scene.slimes.updateSlimeDisplay(this.scene.slimes.nextSlimeColor);
 
-      this.middleOfDrop = true
+      this.middleOfDrop = true;
 
       setTimeout(() => {
-        this.middleOfDrop = false
+        this.middleOfDrop = false;
       }, this.dropDelayLength);
 
       if (this.firstClickTime == 0) {
@@ -67,6 +65,15 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       }
       this.firstClickTime = 0;
     });
+  }
+
+  randomVoice() {
+    const randomX = Phaser.Math.Between(1, 2);
+    if (randomX === 1) {
+      this.scene.sound.play("toFather");
+    } else {
+      this.scene.sound.play("super");
+    }
   }
 }
 

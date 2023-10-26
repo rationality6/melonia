@@ -34,7 +34,12 @@ class Preload extends PhaserSceneTool {
       }
     );
 
+    this.load.image('red', 'assets/particles/red.png');
+    this.load.image('green', 'assets/particles/green.png');
+    this.load.image('blue', 'assets/particles/blue.png');
+
     this.load.image("aris", "assets/aris.png");
+    this.load.image("momoi", "assets/momoi.png");
 
     this.load.image("emptyJar", "assets/empty_jar.png");
 
@@ -46,6 +51,7 @@ class Preload extends PhaserSceneTool {
     this.load.audio("metgedSound", "assets/sounds/merged_sound.mp3");
     this.load.audio("toFather", "assets/sounds/to_father.mp3");
     this.load.audio("super", "assets/sounds/super.mp3");
+    this.load.audio("ready", "assets/sounds/ready_voice.mp3");
   }
 
   loadingImagesMockup() {
