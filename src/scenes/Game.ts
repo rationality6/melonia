@@ -33,8 +33,8 @@ class GameScene extends PhaserSceneTool {
 
     this.sound.play("ready");
 
-    this.add.text(460, 100, "0", { color: "#fff", fontSize: 50 });
-    this.add.text(530, 100, "0", { color: "#fff", fontSize: 50 });
+    // this.add.text(460, 100, "0", { color: "#fff", fontSize: 50 });
+    // this.add.text(530, 100, "0", { color: "#fff", fontSize: 50 });
 
     this.playerSlimes = new Slimes(this);
     this.opponentSlimes = new Slimes(this, "opponent");

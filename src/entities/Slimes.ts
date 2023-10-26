@@ -111,6 +111,9 @@ class Slimes {
       const randomX4 = Phaser.Math.Between(600, 900);
       const randomY4 = Phaser.Math.Between(10, 20);
       new Slime(this.scene, randomX4, 80 + randomY4, slimeName).obsticleSlime();
+      const randomX5 = Phaser.Math.Between(600, 900);
+      const randomY5 = Phaser.Math.Between(10, 20);
+      new Slime(this.scene, randomX5, 80 + randomY5, slimeName).obsticleSlime();
 
       setTimeout(() => {
         this.scene.player.middleOfDrop = false;
@@ -132,6 +135,9 @@ class Slimes {
       const randomX4 = Phaser.Math.Between(100, 400);
       const randomY4 = Phaser.Math.Between(10, 20);
       new Slime(this.scene, randomX4, 80 + randomY4, slimeName).obsticleSlime();
+      const randomX5 = Phaser.Math.Between(100, 400);
+      const randomY5 = Phaser.Math.Between(10, 20);
+      new Slime(this.scene, randomX5, 80 + randomY5, slimeName).obsticleSlime();
 
       setTimeout(() => {
         // this.scene.player.middleOfDrop = false;
