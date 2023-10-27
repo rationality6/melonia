@@ -148,7 +148,7 @@ class GameScene extends PhaserSceneTool {
       const randomLocation = Phaser.Math.Between(650, 950);
       this.opponentSlimes.spawnSlime(randomLocation);
       this.opponentSlimes.updateNextSlimeDisplay();
-    }, 600);
+    }, 1200);
   }
 
   setLayouts() {
