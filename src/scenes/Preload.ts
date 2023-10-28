@@ -50,6 +50,8 @@ class Preload extends PhaserSceneTool {
       frameHeight: 64,
     });
 
+    this.load.image("backgroundMountain", "assets/ui/full-background.png");
+
     this.load.image("lineYellow", "assets/ui/line_yellow.png");
     this.load.image("lineGreen", "assets/ui/line_green.png");
 

@@ -44,15 +44,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         return;
       }
 
-      this.scene.playerSlimes.spawnSlime(this.x);
-      this.scene.playerSlimes.updateNextSlimeDisplay();
-
-      this.middleOfDrop = true;
-
-      setTimeout(() => {
-        this.middleOfDrop = false;
-      }, this.dropDelayLength);
-
       if (this.firstClickTime == 0) {
         this.firstClickTime = this.getTime();
         return;
@@ -60,24 +51,27 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
       let elapsed = this.getTime() - this.firstClickTime;
 
-      if (elapsed < 350) {
-        console.log("double click");
+      if (elapsed < 450) {
+        
+        this.scene.playerSlimes.spawnSlime(this.x);
+        this.scene.playerSlimes.updateNextSlimeDisplay();
+
+        this.middleOfDrop = true;
+
+        setTimeout(() => {
+          this.middleOfDrop = false;
+        }, this.dropDelayLength);
+
       }
       this.firstClickTime = 0;
     });
   }
 
   randomVoice() {
-    const voiceArray = [
-      "toFather",
-      "super",
-      "yell",
-      "savePeace",
-      "blasphemy"
-    ];
-    
+    const voiceArray = ["toFather", "super", "yell", "savePeace", "blasphemy"];
+
     const randomX = Phaser.Math.Between(1, voiceArray.length);
-    
+
     this.scene.sound.play(voiceArray[randomX - 1]);
   }
 }
