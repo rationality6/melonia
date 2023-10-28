@@ -149,6 +149,40 @@ class GameScene extends PhaserSceneTool {
       this.opponentSlimes.spawnSlime(randomLocation);
       this.opponentSlimes.updateNextSlimeDisplay();
     }, 1200);
+
+    this.setFullscreenButton();
+    this.setBackGround();
+  }
+
+  setBackGround() {
+    let bgImage = this.add.image(
+      this.cameras.main.width / 2,
+      this.cameras.main.height / 2,
+      "backgroundMountain"
+    );
+    let scaleX = this.cameras.main.width / bgImage.width;
+    let scaleY = this.cameras.main.height / bgImage.height + 0.13;
+    let scale = Math.max(scaleX, scaleY);
+    bgImage.setScale(scale).setScrollFactor(0).setDepth(-1);
+  }
+
+  setFullscreenButton() {
+    const fullscreenButton = this.add
+      .image(this.gameWidth - 20, this.gameHeight - 20, "fullscreen", 1)
+      .setOrigin(1, 1)
+      .setScale(0.5)
+      .setInteractive()
+      .setDepth(4);
+
+    fullscreenButton.on("pointerup", () => {
+      if (this.scale.isFullscreen) {
+        fullscreenButton.setFrame(0);
+        this.scale.stopFullscreen();
+      } else {
+        fullscreenButton.setFrame(1);
+        this.scale.startFullscreen();
+      }
+    });
   }
 
   setLayouts() {
