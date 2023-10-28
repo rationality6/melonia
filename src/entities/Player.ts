@@ -68,12 +68,17 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   randomVoice() {
-    const randomX = Phaser.Math.Between(1, 2);
-    if (randomX === 1) {
-      this.scene.sound.play("toFather");
-    } else {
-      this.scene.sound.play("super");
-    }
+    const voiceArray = [
+      "toFather",
+      "super",
+      "yell",
+      "savePeace",
+      "blasphemy"
+    ];
+    
+    const randomX = Phaser.Math.Between(1, voiceArray.length);
+    
+    this.scene.sound.play(voiceArray[randomX - 1]);
   }
 }
 

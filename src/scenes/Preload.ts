@@ -7,24 +7,33 @@ class Preload extends PhaserSceneTool {
 
   preload() {
     this.loadLoadingScreen();
+    this.setCharacters();
+    this.setSlimes();
+    this.setUi();
+    this.setSounds();
+  }
 
-    this.load.spritesheet("catLaying", "assets/cat_laying.png", {
-      frameWidth: 32,
-      frameHeight: 32,
-    });
+  setCharacters() {
+    this.load.image("aris", "assets/characters/aris.png");
+    this.load.image("momoi", "assets/characters/momoi.png");
+  }
 
+  setSlimes() {
     this.load.spritesheet("slimeGreen", "assets/slimes/slime_green_final.png", {
       frameWidth: 50,
       frameHeight: 50,
     });
+
     this.load.spritesheet("slimeRed", "assets/slimes/slime_red_final.png", {
       frameWidth: 50,
       frameHeight: 50,
     });
+
     this.load.spritesheet("slimeBlue", "assets/slimes/slime_blue_final.png", {
       frameWidth: 50,
       frameHeight: 50,
     });
+
     this.load.spritesheet(
       "slimeYellow",
       "assets/slimes/slime_yellow_final.png",
@@ -33,35 +42,44 @@ class Preload extends PhaserSceneTool {
         frameHeight: 50,
       }
     );
+  }
 
+  setUi() {
+    this.load.spritesheet("fullscreen", "assets/ui/fullscreen.png", {
+      frameWidth: 64,
+      frameHeight: 64,
+    });
+
+    this.load.image("lineYellow", "assets/ui/line_yellow.png");
+    this.load.image("lineGreen", "assets/ui/line_green.png");
+
+    this.load.image("emptyJar", "assets/ui/empty_jar.png");
+
+    // particles
     this.load.image("red", "assets/particles/red.png");
     this.load.image("green", "assets/particles/green.png");
     this.load.image("blue", "assets/particles/blue.png");
-
-    this.load.image("aris", "assets/aris.png");
-    this.load.image("momoi", "assets/momoi.png");
-
-    this.load.image("lineYellow", "assets/line_yellow.png");
-    this.load.image("lineGreen", "assets/line_green.png");
-
-    this.load.image("emptyJar", "assets/empty_jar.png");
-
-    this.load.tilemapTiledJSON("map", "assets/maps/icemap.json");
-    this.load.image("iceTiles", "assets/maps/ice_tileset.png");
-
-    // this.loadingImagesMockup();
-
-    this.load.audio("metgedSound", "assets/sounds/merged_sound.mp3");
-    this.load.audio("toFather", "assets/sounds/to_father.mp3");
-    this.load.audio("super", "assets/sounds/super.mp3");
-    this.load.audio("ready", "assets/sounds/ready_voice.mp3");
-    this.load.audio("happySong", "assets/sounds/happy_theme.mp3");
   }
 
-  loadingImagesMockup() {
-    [...Array(100).keys()].forEach((i) => {
-      this.load.image(`catWalking${i}`, "assets/cat_walking.png");
-    });
+  setSounds() {
+    // system
+    this.load.audio("metgedSound", "assets/sounds/merged_sound.mp3");
+
+    // system voice
+    this.load.audio("ready", "assets/sounds/ready_voice.mp3");
+
+    // voice
+    this.load.audio("toFather", "assets/sounds/to_father.mp3");
+    this.load.audio("super", "assets/sounds/super.mp3");
+    this.load.audio("tooMany", "assets/sounds/too_many.mp3");
+    this.load.audio("afterbunnerOn", "assets/sounds/afterbunner_on.mp3");
+    this.load.audio("tooMany", "assets/sounds/too_many.mp3");
+    this.load.audio("yell", "assets/sounds/ruru_voice_yell.mp3");
+    this.load.audio("blasphemy", "assets/sounds/blasphemy.mp3");
+    this.load.audio("savePeace", "assets/sounds/save_peace_voice_korea.mp3");
+
+    // bgm
+    this.load.audio("happySong", "assets/sounds/happy_theme.mp3");
   }
 
   loadLoadingScreen() {
