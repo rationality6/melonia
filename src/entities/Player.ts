@@ -40,19 +40,18 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
   setClickInputs() {
     this.scene.input.on("pointerdown", (pointer) => {
-      if (this.middleOfDrop) {
-        return;
-      }
-
       if (this.firstClickTime == 0) {
         this.firstClickTime = this.getTime();
         return;
       }
 
+      if (this.middleOfDrop) {
+        return;
+      }
+
       let elapsed = this.getTime() - this.firstClickTime;
 
-      if (elapsed < 450) {
-        
+      if (elapsed < 400) {
         this.scene.playerSlimes.spawnSlime(this.x);
         this.scene.playerSlimes.updateNextSlimeDisplay();
 
@@ -61,7 +60,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         setTimeout(() => {
           this.middleOfDrop = false;
         }, this.dropDelayLength);
-
+      } else {
+        this.firstClickTime = this.getTime();
+        return;
       }
       this.firstClickTime = 0;
     });
