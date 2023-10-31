@@ -7,18 +7,18 @@ class Preload extends PhaserSceneTool {
 
   preload() {
     this.loadLoadingScreen();
-    this.setCharacters();
-    this.setSlimes();
-    this.setUi();
-    this.setSounds();
+    this.preloadCharacters();
+    this.preloadSlimes();
+    this.preloadUi();
+    this.preloadSounds();
   }
 
-  setCharacters() {
+  preloadCharacters() {
     this.load.image("aris", "assets/characters/aris.png");
     this.load.image("momoi", "assets/characters/momoi.png");
   }
 
-  setSlimes() {
+  preloadSlimes() {
     this.load.spritesheet("slimeGreen", "assets/slimes/slime_green_final.png", {
       frameWidth: 50,
       frameHeight: 50,
@@ -44,7 +44,7 @@ class Preload extends PhaserSceneTool {
     );
   }
 
-  setUi() {
+  preloadUi() {
     this.load.spritesheet("fullscreen", "assets/ui/fullscreen.png", {
       frameWidth: 64,
       frameHeight: 64,
@@ -57,13 +57,20 @@ class Preload extends PhaserSceneTool {
 
     this.load.image("emptyJar", "assets/ui/empty_jar.png");
 
+    this.load.spritesheet("doubleTouch", "assets/ui/double_touch.png", {
+      frameWidth: 150,
+      frameHeight: 190,
+    });
+
+    this.load.image("backButton", "assets/ui/back_button.png");
+
     // particles
     this.load.image("red", "assets/particles/red.png");
     this.load.image("green", "assets/particles/green.png");
     this.load.image("blue", "assets/particles/blue.png");
   }
 
-  setSounds() {
+  preloadSounds() {
     // system
     this.load.audio("metgedSound", "assets/sounds/merged_sound.mp3");
 
