@@ -5,6 +5,8 @@ class Slimes {
   nextSlimeDisplayed: Phaser.GameObjects.Sprite;
 
   slimes: any = [];
+  obsticleSlimes: any = [];
+
   scene: Phaser.Scene;
 
   playerType;
@@ -69,6 +71,8 @@ class Slimes {
         ) {
           this.scene.sound.play("metgedSound");
 
+          this.obsticleSlimeRemoveTest()
+
           if (gameObjectA.scale < 4) {
             let biggerSlime = new Slime(
               this.scene,
@@ -81,7 +85,7 @@ class Slimes {
             this.slimes.push(biggerSlime);
             this.setSlimesCollides(biggerSlime, count - 1);
           } else {
-            this.scene.player.randomVoice();
+            this.scene.player.playRandomVoice();
 
             this.spawnObsticleSlimes(gameObjectA.name);
           }
@@ -94,8 +98,36 @@ class Slimes {
     });
   }
 
+  obsticleSlimeRemoveTest(){
+
+  }
+
+
+
+  activateSuperMove() {
+    this.scene.sound.play("super");
+  
+    // this.obsticleSlimes.forEach((slime) => {
+    //   this.scene.matter.world.remove(slime);
+    //   slime.destroy();
+    // });
+
+    // supermove 1
+    // this.slimes.forEach((slime) => {
+    //   this.scene.matter.world.remove(slime);
+    //   slime.destroy();
+    // });
+    // this.slimes = [];
+
+    // supermove 2
+    // this.slimes.forEach((slime) => {
+    //   slime.setScale(7);
+    // });
+  }
+
   spawnObsticleSlime(toPlayerType, slimeColor) {
     let randomX;
+
     if (toPlayerType === "player") {
       randomX = Phaser.Math.Between(600, 900);
     } else {
@@ -103,7 +135,16 @@ class Slimes {
     }
 
     const randomY = Phaser.Math.Between(10, 20);
-    new Slime(this.scene, randomX, 80 + randomY, slimeColor).obsticleSlime();
+
+    const newObsticleSlime = new Slime(
+      this.scene,
+      randomX,
+      80 + randomY,
+      slimeColor
+    )
+    newObsticleSlime.obsticleSlime();
+
+    this.obsticleSlimes.push(newObsticleSlime);
   }
 
   async spawnObsticleSlimes(slimeColor) {

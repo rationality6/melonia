@@ -7,6 +7,8 @@ import Aris from "../entities/Aris";
 
 import Slimes from "../entities/Slimes";
 
+import tutorialMixin from "../mixins/tutorialMixin";
+
 class GameScene extends PhaserSceneTool {
   player: Player;
   player2;
@@ -16,6 +18,14 @@ class GameScene extends PhaserSceneTool {
   playerCharacter;
   playerCharacter2;
 
+  playerCharge = 0;
+  opponentCharge = 0;
+
+  playerWinCount = 0;
+  playerWinCountText
+  opponentWinCount = 0;
+  opponentWinCountText
+
   endPair;
 
   blackA;
@@ -23,24 +33,31 @@ class GameScene extends PhaserSceneTool {
 
   gameEnded: boolean = false;
 
-  constructor() {
+  afterCollideTime;
+  collideLine;
+
+  constructor(config) {
     super("GameScene");
+
+    this.config = config;
   }
 
   create() {
     initAnims(this.anims);
+    Object.assign(this, tutorialMixin);
+
     this.setLayouts();
 
     this.sound.play("ready");
 
-    // this.playerWinCountText = this.add.text(460, 100, "0", {
-    //   color: "#fff",
-    //   fontSize: 50,
-    // });
-    // this.opponentWinCountText = this.add.text(530, 100, "0", {
-    //   color: "#fff",
-    //   fontSize: 50,
-    // });
+    this.playerWinCountText = this.add.text(460, 100, this.playerWinCount, {
+      color: "#fff",
+      fontSize: 50,
+    });
+    this.opponentWinCountText = this.add.text(530, 100, this.opponentWinCount, {
+      color: "#fff",
+      fontSize: 50,
+    });
 
     this.playerSlimes = new Slimes(this);
     this.opponentSlimes = new Slimes(this, "opponent");
@@ -68,6 +85,39 @@ class GameScene extends PhaserSceneTool {
       repeat: -1,
     });
 
+    this.setGameEndCheckBlock();
+
+    this.setOpponentActionInterval();
+    this.setObsticleSlimeEffect();
+    this.setFullscreenButton();
+    this.setBackGround();
+
+    // const superButton = this.add
+    //   .image(100, 200, "fullscreen", 1)
+    //   .setOrigin(1, 1)
+    //   .setScale(0.5)
+    //   .setInteractive()
+    //   .setDepth(4);
+
+    // superButton.on("pointerup", () => {
+    //   this.playerSlimes.activateSuperMove();
+    // });
+
+    this.secretDebugComboKey();
+
+    this.restartButton = this.add
+      .image(this.gameWidth - 72, this.gameHeight - 12, "backButton")
+      .setOrigin(1, 1)
+      .setScale(2)
+      .setInteractive();
+
+    this.restartButton.on("pointerdown", () => {
+      console.log("restart");
+      this.restartGame();
+    });
+  }
+
+  setObsticleSlimeEffect() {
     this.catmull = this.add.particles(300, 500, "blue", {
       x: { values: [0, 500], interpolation: "catmull" },
       lifespan: 2000,
@@ -89,35 +139,47 @@ class GameScene extends PhaserSceneTool {
       blendMode: "ADD",
     });
     this.catmullReverse.setDepth(3);
+  }
 
-    this.blockA = this.matter.add
-      .image(775, 210, "lineGreen", null, {
+  setOpponentActionInterval() {
+    this.opponentInterbal = setInterval(() => {
+      const randomLocation = Phaser.Math.Between(650, 950);
+      this.opponentSlimes.spawnSlime(randomLocation);
+      this.opponentSlimes.updateNextSlimeDisplay();
+    }, 1200);
+  }
+
+  setGameEndCheckBlock() {
+    this.lineA = this.matter.add
+      .image(250, 195, "lineGreen", null, {
         isSensor: true,
-        label: "blockA",
+        label: "lineA",
       })
       .setScale(0.6);
-    this.blockA.setStatic(true);
+    this.lineA.setStatic(true);
 
-    this.blockB = this.matter.add
-      .image(250, 210, "lineYellow", null, {
+    this.lineB = this.matter.add
+      .image(775, 195, "lineYellow", null, {
         isSensor: true,
-        label: "blockB",
+        label: "lineB",
       })
       .setScale(0.6);
-    this.blockB.setStatic(true);
+    this.lineB.setStatic(true);
 
     this.matter.world.on("collisionactive", (event, o1, o2) => {
       if (
         event.pairs.some(
           (pair) =>
-            (pair.bodyA.label == "blockB" &&
-              pair.bodyB.label == "slimeSensor") ||
-            (pair.bodyA.label == "blockA" && pair.bodyB.label == "slimeSensor")
+            pair.bodyA.label == "lineA" && pair.bodyB.label == "slimeSensor"
         )
       ) {
-        if (this.afterCollideTime == undefined) {
+        if (
+          this.afterCollideTime == undefined &&
+          this.collideLine == undefined
+        ) {
           this.afterCollideTime = this.getTimestamp();
-          this.afterCollideTime += 3000;
+          this.afterCollideTime += 3500;
+          this.collideLine = "lineA";
         }
         if (
           this.afterCollideTime &&
@@ -127,31 +189,86 @@ class GameScene extends PhaserSceneTool {
             return;
           }
           this.gameEnded = true;
+          this.lineA.setTint(0xff0000)
           clearInterval(this.opponentInterbal);
-          this.scene.pause();
+          this.matter.pause();
+
+          this.add.text(350, 300, "opponent Win!", {
+            color: "#fff",
+            fontSize: 50,
+          }).setDepth(5)
+          this.opponentWinCount += 1
+          this.opponentWinCountText.setText(`${this.opponentWinCount}`);
 
           this.sound.play("happySong");
-          setTimeout(() => {
-            this.afterCollideTime = undefined;
-            this.gameEnded = false;
+        }
+      } else if (
+        event.pairs.some(
+          (pair) =>
+            pair.bodyA.label == "lineB" && pair.bodyB.label == "slimeSensor"
+        )
+      ) {
+        if (
+          this.afterCollideTime == undefined &&
+          this.collideLine == undefined
+        ) {
+          this.afterCollideTime = this.getTimestamp();
+          this.afterCollideTime += 3500;
+          this.collideLine = "lineB";
+        }
+        if (
+          this.afterCollideTime &&
+          this.afterCollideTime < this.getTimestamp()
+        ) {
+          if (this.gameEnded) {
+            return;
+          }
+          this.gameEnded = true;
+          this.lineB.setTint(0xff0000)
+          clearInterval(this.opponentInterbal);
+          this.matter.pause();
 
-            this.scene.restart();
-            this.game.sound.stopAll();
-          }, 4000);
+          this.add.text(400, 300, "You Win!", {
+            color: "#fff",
+            fontSize: 50,
+          }).setDepth(5)
+          this.playerWinCount += 1
+          this.playerWinCountText.setText(`${this.playerWinCount}`);
+
+          this.sound.play("happySong");
         }
       } else {
+        this.collideLine = undefined;
         this.afterCollideTime = undefined;
       }
+
+    });
+  }
+
+  restartGame() {
+    this.matter.resume();
+    clearInterval(this.opponentInterbal);
+    this.afterCollideTime = undefined;
+    this.collideLine == undefined
+    this.gameEnded = false;
+
+    this.scene.restart();
+    this.game.sound.stopAll();
+  }
+
+  secretDebugComboKey() {
+    // type debug and debug mode on
+    this.input.keyboard.createCombo([68, 69, 66, 85, 71], {
+      resetOnMatch: true,
     });
 
-    this.opponentInterbal = setInterval(() => {
-      const randomLocation = Phaser.Math.Between(650, 950);
-      this.opponentSlimes.spawnSlime(randomLocation);
-      this.opponentSlimes.updateNextSlimeDisplay();
-    }, 1200);
-
-    this.setFullscreenButton();
-    this.setBackGround();
+    this.input.keyboard.on(
+      "keycombomatch",
+      function (event) {
+        // debugger;
+      },
+      this
+    );
   }
 
   setBackGround() {

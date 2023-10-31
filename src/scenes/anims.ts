@@ -48,4 +48,14 @@ export default (anims) => {
     frameRate: 10,
     repeat: -1,
   });
+
+  anims.create({
+    key: "doubleTouch",
+    frames: anims.generateFrameNumbers("doubleTouch", {
+      start: 0,
+      end: 2,
+    }),
+    frameRate: 6,
+    repeat: -1,
+  });
 };

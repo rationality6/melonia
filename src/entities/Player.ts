@@ -6,6 +6,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
   dropDelayLength = 600;
 
+  superMoveCount: number = 0;
+  superMove: boolean = false;
+
   constructor(scene, x, y, key) {
     super(scene, x, y, key);
 
@@ -68,8 +71,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     });
   }
 
-  randomVoice() {
-    const voiceArray = ["toFather", "super", "yell", "savePeace", "blasphemy"];
+  playRandomVoice() {
+    const voiceArray = ["toFather", "yell", "savePeace", "blasphemy"];
 
     const randomX = Phaser.Math.Between(1, voiceArray.length);
 
