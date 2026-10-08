@@ -174,6 +174,7 @@ class Preload extends PhaserSceneTool {
     await this.setDelay(logoExposeSetting);
     this.cameras.main.fadeOut(logoExposeSetting, 255, 255, 255);
     await this.setDelay(logoExposeSetting);
+    this.scene.launch("CharacterSelectScene");
     this.scene.start("GameScene");
   }
 }

@@ -43,7 +43,7 @@ class Slime extends Phaser.Physics.Matter.Sprite {
   obsticleSlime() {
     this.setTint(0xff0000);
   }
-  
+
 }
 
 export default Slime;
