@@ -149,14 +149,37 @@ class GameScene extends PhaserSceneTool {
     }, 1200);
   }
 
+  updateGauge(value) {
+    // 0~100 사이 범위로 수치 제한
+    this.gaugeValue = Phaser.Math.Clamp(value, 0, 100);
+
+    // 0~100 수치를 0~1 비율(percentage)로 환산
+    const percentage = this.gaugeValue / 100;
+
+    // 원본 이미지 고유 너비와 높이
+    const originalWidth = this.lineA.width;
+    const originalHeight = this.lineA.height;
+
+    // 왼쪽(0, 0)에서부터 percentage 비율만큼의 너비만 잘라서 출력
+    this.lineA.setCrop(0, 0, originalWidth * percentage, originalHeight);
+  }
+
   setGameEndCheckBlock() {
     this.lineA = this.matter.add
       .image(250, 195, "lineGreen", null, {
         isSensor: true,
         label: "lineA",
       })
-      .setScale(0.6);
+      .setScale(0.6)
+      .setDepth(1)
     this.lineA.setStatic(true);
+    
+    this.cloneSprite(this.lineA).setDepth(0)
+
+    this.lineA.setTint(0xff4444);
+
+
+    this.updateGauge(60);
 
     this.lineB = this.matter.add
       .image(775, 195, "lineYellow", null, {
@@ -208,6 +231,9 @@ class GameScene extends PhaserSceneTool {
             pair.bodyA.label == "lineB" && pair.bodyB.label == "slimeSensor"
         )
       ) {
+
+        console.log(this.afterCollideTime);
+        
         if (
           this.afterCollideTime == undefined &&
           this.collideLine == undefined
