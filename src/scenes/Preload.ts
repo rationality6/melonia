@@ -61,6 +61,11 @@ class Preload extends PhaserSceneTool {
       frameWidth: 150,
       frameHeight: 190,
     });
+    
+    this.load.spritesheet("malfoi", "assets/characters/malfoi.png", {
+      frameWidth: 360,
+      frameHeight: 640,
+    });
 
     this.load.image("backButton", "assets/ui/back_button.png");
 
@@ -174,8 +179,10 @@ class Preload extends PhaserSceneTool {
     await this.setDelay(logoExposeSetting);
     this.cameras.main.fadeOut(logoExposeSetting, 255, 255, 255);
     await this.setDelay(logoExposeSetting);
+
     this.scene.launch("CharacterSelectScene");
-    this.scene.start("GameScene");
+    // this.scene.start("GameScene");
+
   }
 }
 

@@ -149,7 +149,7 @@ class GameScene extends PhaserSceneTool {
     }, 1200);
   }
 
-  updateGauge(value) {
+  updateGauge(value, targetObj) {
     // 0~100 사이 범위로 수치 제한
     this.gaugeValue = Phaser.Math.Clamp(value, 0, 100);
 
@@ -157,11 +157,11 @@ class GameScene extends PhaserSceneTool {
     const percentage = this.gaugeValue / 100;
 
     // 원본 이미지 고유 너비와 높이
-    const originalWidth = this.lineA.width;
-    const originalHeight = this.lineA.height;
+    const originalWidth = targetObj.width;
+    const originalHeight = targetObj.height;
 
     // 왼쪽(0, 0)에서부터 percentage 비율만큼의 너비만 잘라서 출력
-    this.lineA.setCrop(0, 0, originalWidth * percentage, originalHeight);
+    targetObj.setCrop(0, 0, originalWidth * percentage, originalHeight);
   }
 
   setGameEndCheckBlock() {
@@ -177,9 +177,7 @@ class GameScene extends PhaserSceneTool {
     this.cloneSprite(this.lineA).setDepth(0)
 
     this.lineA.setTint(0xff4444);
-
-
-    this.updateGauge(60);
+    this.updateGauge(0, this.lineA);
 
     this.lineB = this.matter.add
       .image(775, 195, "lineYellow", null, {
@@ -232,8 +230,6 @@ class GameScene extends PhaserSceneTool {
         )
       ) {
 
-        console.log(this.afterCollideTime);
-        
         if (
           this.afterCollideTime == undefined &&
           this.collideLine == undefined
