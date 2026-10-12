@@ -42,6 +42,12 @@ class GameScene extends PhaserSceneTool {
     this.config = config;
   }
 
+  init(data) {
+    console.log(data);
+    this.selectedCharacter = data.selectedCharacter;
+    this.selectedCharacter2 = data.selectedCharacter2;
+  }
+
   create() {
     initAnims(this.anims);
     Object.assign(this, tutorialMixin);
@@ -65,13 +71,16 @@ class GameScene extends PhaserSceneTool {
     this.player = new Player(this, 350, 70, "aris");
     this.player2 = this.add.image(850, 70, "momoi").setScale(0.18);
 
-    this.playerCharacter = new Aris(this, 512, 540, "aris")
+    // this.playerCharacter = new Aris(this, 512, 540, "aris")
+    //   .setScale(0.3)
+    //   .setOrigin(1, 0)
+    //   .setDepth(2);
+
+    this.playerCharacter = this.add.sprite(412, 640, 'malfoi')
       .setScale(0.3)
-      .setOrigin(1, 0)
-      .setDepth(2);
 
     this.playerCharacter2 = this.add
-      .image(492, 570, "momoi")
+      .sprite(492, 570, "momoi")
       .setScale(0.25)
       .setOrigin(0, 0)
       .setDepth(2);
@@ -173,7 +182,7 @@ class GameScene extends PhaserSceneTool {
       .setScale(0.6)
       .setDepth(1)
     this.lineA.setStatic(true);
-    
+
     this.cloneSprite(this.lineA).setDepth(0)
 
     this.lineA.setTint(0xff4444);

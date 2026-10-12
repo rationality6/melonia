@@ -19,8 +19,7 @@ class Aris extends Phaser.Physics.Arcade.Sprite {
     this.setScale(0.4);
     this.cursors = this.scene.input.keyboard.createCursorKeys();
 
-    this.scene.events.on(Phaser.Scenes.Events.UPDATE, this.update, this);
-
+    // this.scene.events.on(Phaser.Scenes.Events.UPDATE, this.update, this);
     // this.dashdusts = new DashDusts(this.scene, this);
 
     this.scene.tweens.add({
@@ -35,31 +34,6 @@ class Aris extends Phaser.Physics.Arcade.Sprite {
     // this.bustShot = new BustShot(this.scene, this);
   }
 
-  update() {
-    if (this.middleOfAction) {
-      this.setVelocityX(0);
-      return;
-    }
-
-    // const { left, right, space, up } = this.cursors;
-    // const onFloorValue = this.body.onFloor();
-    // const isSpaceJustDown = Phaser.Input.Keyboard.JustDown(space);
-    // const isUpJustDown = Phaser.Input.Keyboard.JustDown(up);
-
-    // if (left.isDown) {
-    //   this.lastDirection = Phaser.Physics.Arcade.FACING_LEFT;
-    //   this.setVelocityX(-this.moveSpeed);
-    //   this.setFlipX(true);
-    //   // this.dashdusts.dash(this.lastDirection);
-    // } else if (right.isDown) {
-    //   this.lastDirection = Phaser.Physics.Arcade.FACING_RIGHT;
-    //   this.setVelocityX(this.moveSpeed);
-    //   this.setFlipX(false);
-    //   // this.dashdusts.dash(this.lastDirection);
-    // } else {
-    //   this.setVelocityX(0);
-    // }
-  }
 }
 
 export default Aris;

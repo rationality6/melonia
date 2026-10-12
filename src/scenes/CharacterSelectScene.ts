@@ -44,8 +44,13 @@ class CharacterSelectScene extends PhaserSceneTool {
 
         selectButtonBg.on('pointerdown', () => {
             const selectedChar = this.characters[this.currentIndex];
+            const selectedChar2 = this.characters[this.currentIndex2];
+
             // GameScene으로 데이터 전달하며 씬 전환
-            this.scene.start('GameScene', { selectedCharacter: selectedChar });
+            this.scene.start('GameScene', {
+                selectedCharacter: selectedChar,
+                selectedCharacter2: selectedChar2
+            });
         });
     }
 
