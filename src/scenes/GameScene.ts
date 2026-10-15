@@ -53,6 +53,7 @@ class GameScene extends PhaserSceneTool {
     Object.assign(this, tutorialMixin);
 
     this.setLayouts();
+    this.debugMode()
 
     this.sound.play("ready");
 
@@ -362,6 +363,25 @@ class GameScene extends PhaserSceneTool {
     this.matter.add.rectangle(770, 720, 510, 60, {
       chamfer: { radius: 20 },
       isStatic: true,
+    });
+  }
+
+  debugMode() {
+    const startY = 20
+    const gapY = 30
+
+    const debugButtons = [
+      { text: 'textTimelineParry', action: () => { this.playerSlimes.spawnObsticleSlime() } },
+      { text: 'powerUpSequence', action: () => { this.tls.powerUpSequence() } },
+    ];
+
+    debugButtons.forEach((btn, index) => {
+      const currentY = startY + (index * gapY)
+
+      this.add.text(20, currentY, btn.text)
+        .setStroke('#000000', 4) // 검은색 외곽선, 두께 4px (원하는 색상과 두께로 수정 가능)
+        .setInteractive({ useHandCursor: true })
+        .on('pointerdown', () => { btn.action() });
     });
   }
 }
